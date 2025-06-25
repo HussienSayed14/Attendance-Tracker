@@ -3,3 +3,7 @@ PYTHONPATH=. alembic revision --autogenerate -m "add day_name to work_days"
 
 # apply it
 PYTHONPATH=. alembic upgrade head
+
+
+Start uvicorn server
+uvicorn app.main:app --reload
