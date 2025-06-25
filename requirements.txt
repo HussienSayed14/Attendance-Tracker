@@ -5,3 +5,5 @@ python-dotenv
 psycopg
 alembic
 pydantic
+passlib
+pydantic-settings
