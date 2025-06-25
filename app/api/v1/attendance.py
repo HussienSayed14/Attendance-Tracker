@@ -13,7 +13,7 @@ def submit_attendance(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    AttendanceService.submit_entries(db, current_user.id, payload.entries)
+    AttendanceService.submit_entries(db, current_user, payload.entries)
     return {"message": "Attendance submitted successfully"}
 
 

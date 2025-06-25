@@ -5,7 +5,7 @@ from typing import List, Literal
 
 class AttendanceEntry(BaseModel):
     date: date
-    status: Literal["office", "home", "leave", "night"]
+    status: Literal["onsite", "remote", "leave", "night"]
 
 class SubmitAttendanceRequest(BaseModel):
     entries: List[AttendanceEntry]
@@ -26,3 +26,4 @@ class AttendanceSummary(BaseModel):
     night_days: int
     absent_days: int
     remaining_on_site: int
+    extra_days: int

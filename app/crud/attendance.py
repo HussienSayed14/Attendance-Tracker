@@ -38,8 +38,8 @@ def get_summary(db: Session, user_id: int, year: int, month: int) -> AttendanceS
         (r.status.value if hasattr(r.status, "value") else r.status): r.cnt for r in rows
     }
 
-    office = counts.get("office", 0)
-    remote = counts.get("home", 0)
+    office = counts.get("on-site", 0)
+    remote = counts.get("remote", 0)
     leave  = counts.get("leave", 0)
     night  = counts.get("night", 0)
     absent = counts.get("absent", 0)
@@ -47,6 +47,7 @@ def get_summary(db: Session, user_id: int, year: int, month: int) -> AttendanceS
     required_initial   = round(total_wd * 0.6)
     required_after_exemptions = max(required_initial - night - leave, 0)
     remaining = max(required_after_exemptions - office, 0)
+    extra_days = max(office - required_after_exemptions, 0)
 
     return AttendanceSummary(
         year=year,
@@ -61,4 +62,6 @@ def get_summary(db: Session, user_id: int, year: int, month: int) -> AttendanceS
         night_days=night,
         absent_days=absent,
         remaining_on_site=remaining,
+        extra_days=extra_days
+        
     )
