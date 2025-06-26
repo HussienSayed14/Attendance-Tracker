@@ -1,9 +1,9 @@
 # create a new migration
 PYTHONPATH=. alembic revision --autogenerate -m "add day_name to work_days"
 
-# apply it
+# apply Migration
 PYTHONPATH=. alembic upgrade head
 
 
-Start uvicorn server
+Start/Reload uvicorn server
 uvicorn app.main:app --reload
