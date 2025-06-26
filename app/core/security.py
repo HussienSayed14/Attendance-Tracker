@@ -20,13 +20,13 @@ def verify_password(plain: str, hashed: str) -> bool:
 # ------------------------------------------------------------------
 SECRET_KEY = os.getenv("JWT_SECRET", "super-secret")  
 ALGORITHM  = "HS256"
-ACCESS_EXPIRE_MINUTES = 120
+ACCESS_EXPIRE_DAYS = 7
 
 def create_access_token(sub: str) -> str:
     """
     sub = subject (user id or email)
     """
-    expire = datetime.datetime.utcnow() + datetime.timedelta(minutes=ACCESS_EXPIRE_MINUTES)
+    expire = datetime.datetime.utcnow() + datetime.timedelta(days=ACCESS_EXPIRE_DAYS)
     to_encode = {"exp": expire, "sub": sub}
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 

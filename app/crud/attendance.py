@@ -1,11 +1,13 @@
 from datetime import date
 from calendar import monthrange
-from typing import Dict
+from typing import Dict, List
 from sqlalchemy import func, case
 from sqlalchemy.orm import Session
 from app.models.work_day import WorkDay
 from app.models.attendance import Attendance
-from app.schemas.attendance import AttendanceSummary
+from app.schemas.attendance import AttendanceSummary, WorkDayWithStatus
+from sqlalchemy import and_
+
 
 def get_summary(db: Session, user_id: int, year: int, month: int) -> AttendanceSummary:
     first_day = date(year, month, 1)
@@ -65,3 +67,42 @@ def get_summary(db: Session, user_id: int, year: int, month: int) -> AttendanceS
         extra_days=extra_days
         
     )
+
+
+
+def list_work_days_with_status(
+    db: Session,
+    user_id: int,
+    start: date,
+    end: date
+) -> List[WorkDayWithStatus]:
+    """
+    Returns every work_day in [start, end] plus the user's attendance.status if present.
+    """
+    rows = (
+        db.query(
+            WorkDay.date,
+            WorkDay.is_holiday,
+            Attendance.status
+        )
+        .outerjoin(
+            Attendance,
+            and_(
+                Attendance.user_id == user_id,
+                Attendance.date == WorkDay.date
+            )
+        )
+        .filter(WorkDay.date.between(start, end))
+        .order_by(WorkDay.date)
+        .all()
+    )
+
+    # rows is a list of tuples; map each to the schema
+    return [
+        WorkDayWithStatus(
+            date=row.date,
+            is_holiday=row.is_holiday,
+            status=row.status        # may be None -> becomes null in JSON
+        )
+        for row in rows
+    ]

@@ -1,7 +1,7 @@
 # app/schemas/attendance.py
 from pydantic import BaseModel
 from datetime import date
-from typing import List, Literal
+from typing import List, Literal, Optional
 
 class AttendanceEntry(BaseModel):
     date: date
@@ -27,3 +27,14 @@ class AttendanceSummary(BaseModel):
     absent_days: int
     remaining_on_site: int
     extra_days: int
+
+
+class WorkDayWithStatus(BaseModel):
+    date: date
+    is_holiday: bool
+    status: Optional[
+        Literal["on-site", "remote", "leave", "night", "absent"]
+    ] = None        # null if user never submitted
+
+    class Config:
+        orm_mode = True      # lets FastAPI read SQLAlchemy rows directly
