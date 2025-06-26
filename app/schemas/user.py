@@ -26,3 +26,9 @@ class LoginResponse(BaseModel):
     name: str
     email: EmailStr
     token_type: str = "bearer"
+
+
+class UserOut(BaseModel):
+    id: int
+    name: str
+    email: EmailStr
