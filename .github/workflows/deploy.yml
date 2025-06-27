@@ -12,6 +12,10 @@ jobs:
       - name: Checkout (needed only to satisfy actions/checkout)
         uses: actions/checkout@v4
 
+
+      - name: Debug secret
+        run: echo "Host is ${{ secrets.EC2_SSH_HOST }}"
+
       - name: SSH & deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
