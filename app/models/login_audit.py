@@ -6,7 +6,7 @@ from app.crud import user
 from sqlalchemy.orm import relationship
 
 # ────── Logic Audit Model ────────────────────────────────────────────────
-class LogicAudit(Base):
+class LoginAudit(Base):
     __tablename__ = "logic_audit"
 
     id = Column(Integer, primary_key=True, index=True)
