@@ -18,6 +18,8 @@ jobs:
       - name: Debug secret 2
         run: echo "App DIR is ${{ secrets.EC2_APP_DIR }}"
 
+
+
       - name: SSH & deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
