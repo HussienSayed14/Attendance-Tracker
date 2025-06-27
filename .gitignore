@@ -1,1 +1,13 @@
 .env
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtualenvs
+.venv/
+
+# Ignore DB and log files
+*.sqlite3
+alembic.log
+*.pyc
