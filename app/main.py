@@ -8,6 +8,7 @@ app = FastAPI(title="Attendance Tracker API")
 
 # Allow requests from your frontend (adjust port if different)
 origins = [
+    "http://attendance-report-bucket.s3-website.eu-north-1.amazonaws.com",  # S3 bucket URL
     "http://localhost:5173",  # Vite default port
     "http://127.0.0.1:5173",  # Also valid
 ]
