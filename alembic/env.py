@@ -5,6 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
+from app.core.config import settings 
+
 from app.core.database import Base
 from app import models
 # this is the Alembic Config object, which provides
@@ -26,6 +28,9 @@ target_metadata = Base.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
+#  Inject the runtime URL (overrides alembic.ini placeholder)
+config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
 
 
 def run_migrations_offline() -> None:
