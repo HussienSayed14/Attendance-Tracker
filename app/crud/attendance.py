@@ -83,7 +83,9 @@ def list_work_days_with_status(
         db.query(
             WorkDay.date,
             WorkDay.is_holiday,
+            WorkDay.day_name,
             Attendance.status
+            
         )
         .outerjoin(
             Attendance,
@@ -102,6 +104,7 @@ def list_work_days_with_status(
         WorkDayWithStatus(
             date=row.date,
             is_holiday=row.is_holiday,
+            day_name=row.day_name,  # e.g. "Monday"
             status=row.status        # may be None -> becomes null in JSON
         )
         for row in rows

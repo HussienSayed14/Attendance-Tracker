@@ -32,6 +32,7 @@ class AttendanceSummary(BaseModel):
 class WorkDayWithStatus(BaseModel):
     date: date
     is_holiday: bool
+    day_name: str          # e.g. "Monday"
     status: Optional[
         Literal["on-site", "remote", "leave", "night", "absent"]
     ] = None        # null if user never submitted
