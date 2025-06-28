@@ -19,6 +19,8 @@ class User(Base):
     # ────── relationships ────────────────────────────────────────────────
     manager = relationship("User", remote_side=[id], backref="team")  # manager.team → list[User]
 
+    permissions = relationship("UserPermission", back_populates="user", cascade="all, delete")
+
     # ────── indexes ──────────────────────────────────────────────────────
     __table_args__ = (
         Index("idx_user_manager", "manager_id"),

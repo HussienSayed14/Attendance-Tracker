@@ -1,4 +1,7 @@
+from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field
+
+from app.models import permissions
 
 # Incoming payload
 class UserCreate(BaseModel):
@@ -26,9 +29,25 @@ class LoginResponse(BaseModel):
     name: str
     email: EmailStr
     token_type: str = "bearer"
+    permissions: list[str]
+
+
+class UserStatusUpdate(BaseModel):
+    id: int
+    is_active: bool
+
+    class Config:
+        orm_mode = True
 
 
 class UserOut(BaseModel):
     id: int
     name: str
     email: EmailStr
+    is_active: bool
+    created_at: datetime
+    permissions: list[str]
+
+    class Config:
+        orm_mode = True
+        from_attributes = True

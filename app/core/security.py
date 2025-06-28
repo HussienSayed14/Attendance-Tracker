@@ -2,7 +2,6 @@ import os, datetime
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from fastapi import HTTPException, status
-from app.models.user import User
 
 # ------------------------------------------------------------------
 # Password hashing

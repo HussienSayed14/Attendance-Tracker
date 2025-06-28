@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from app.schemas.user import LoginResponse, UserCreate
+from app.models.permissions import Permission
+from app.schemas.user import LoginResponse, UserCreate, UserOut
 from app.models.user import User
 from app.crud import user as crud_user
 from app.services.login_audit_service import AuditService
@@ -60,7 +61,8 @@ class UserService:
             id=user.id, # type: ignore
             name=user.name, # type: ignore
             email=user.email, # type: ignore
-            token_type="bearer"
+            token_type="bearer",
+            permissions=[up.permission.name for up in user.permissions] 
         )
         # 5. Log the successful login attempt
         AuditService.create_log(
@@ -71,4 +73,27 @@ class UserService:
         )
         return reponse
     
+
+
+
+    @staticmethod
+    def refresh_user_session(db: Session, current_user: User) -> UserOut:
+
+        """
+        Refresh user session data.
+        This can be used to update user permissions or other session-related data.
+        """
+        # Fetch the latest user data from the database
         
+        permission_names = [up.permission.name for up in current_user.permissions]
+
+        return UserOut(
+            id=current_user.id, # type: ignore
+            name=current_user.name, # type: ignore
+            email=current_user.email, # type: ignore
+            is_active=current_user.is_active, # type: ignore
+            created_at=current_user.created_at, # type: ignore
+            permissions=permission_names
+        )
+        
+            

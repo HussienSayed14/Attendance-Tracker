@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.v1 import auth
+from app.api.v1 import admin, auth
 from app.api.v1 import attendance
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -23,3 +23,4 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(attendance.router)
+app.include_router(admin.router)
