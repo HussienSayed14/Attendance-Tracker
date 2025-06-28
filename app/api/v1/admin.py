@@ -22,7 +22,7 @@ def get_users(
     return AdminService.get_users(db, status)
 
 
-@router.get("/users/update", response_model=UserOut)
+@router.patch("/users/update", response_model=UserOut)
 def update_user_status(
     paylaod: UserStatusUpdate,
     db: Session = Depends(get_db),
